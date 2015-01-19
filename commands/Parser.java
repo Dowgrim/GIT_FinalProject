@@ -1,4 +1,4 @@
-package zuul.commands;
+package commands;
 
 import java.util.Scanner;
 

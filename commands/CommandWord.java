@@ -1,4 +1,4 @@
-package zuul.commands;
+package commands;
 
 /**
  * Representations for all the valid command words for the game along with a

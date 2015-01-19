@@ -1,4 +1,4 @@
-package zuul.languages;
+package languages;
 
 import java.util.ListResourceBundle;
 

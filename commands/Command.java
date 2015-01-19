@@ -20,10 +20,13 @@ package zuul.commands;
  *
  */
 
+<<<<<<< Updated upstream
 //TestGitNico //
     //testVincent
 
 
+=======
+>>>>>>> Stashed changes
 public class Command
 {
     private CommandWord commandWord;

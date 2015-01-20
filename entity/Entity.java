@@ -8,6 +8,7 @@ import java.util.*;
 
 /**
  * Created by Michael on 19/01/2015.
+ * Edited by Nicolas
  */
 
 public class Entity {
@@ -18,6 +19,7 @@ public class Entity {
 
     public Entity () {
         this.energy = 100; // The player begins with 100 energy points
+        this.fragments = 0; // The player begins with no fragment
     }
 
     /**
@@ -66,17 +68,40 @@ public class Entity {
         currentRoom = currentRoom.getExits().get(choice-1);
     }
 
-    public void pickUp() {
-        Item item;
-        Iterator  i = currentRoom.getItemContained().iterator();
-        while (i.hasNext()) {
-            item = (Item) i.next();
-            this.bag.add(item);
-            i.remove();
-        }
-        if (currentRoom.isFragment()) {
-            this.fragments++;
-            currentRoom.setFragment(false);
+    /**
+     * Gets the bag of the player
+     * @return bag
+     */
+    public ArrayList<Item> getBag() {
+        return this.bag;
+    }
+
+    /**
+     * Returns the number of fragments the player has
+     */
+    public int getFragments () {
+        return this.fragments;
+    }
+
+    /**
+     * Adds a fragment to the player
+     */
+    public void addFragment() {
+        this.fragments++;
+    }
+
+    /**
+     * Prints the items present in the student's bag
+     */
+    public void printBag() {
+        if (this.bag.isEmpty()) { // If the bag is empty, prints a message
+            System.out.println("Votre sac est vide !");
+        } else {
+            System.out.print("Votre sac contient :");
+            for (Item item : bag) {     // Prints all the items the player has
+                System.out.print(item.getDescription() + " ");
+            }
+            System.out.println();
         }
     }
     }

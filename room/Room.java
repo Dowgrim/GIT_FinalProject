@@ -1,6 +1,9 @@
 package room;
 
+import entity.Entity;
 import item.*;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**

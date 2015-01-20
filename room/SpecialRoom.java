@@ -45,7 +45,7 @@ public class SpecialRoom extends Room{
     */
     public void pickUp(Entity player) {
         Item item;
-        for (int i = 0; i < getItemContained().size(); ++i) {
+        for (int i = getItemContained().size(); i >= 0; --i) {
             item = getItemContained().get(i);
             player.getBag().add(item); // Adds each item to the bag of the player
             getItemContained().remove(i);  // Removes it from the room
@@ -54,6 +54,16 @@ public class SpecialRoom extends Room{
             player.addFragment();
             setFragment(false);
         }
+    }
+
+    public boolean tryUnlock(ArrayList<Item> bag){
+        for (Item item : itemNeeded){
+            if (!(bag.contains(item))){
+                return false;
+            }
+        }
+        locked = false;
+        return true;
     }
 
 

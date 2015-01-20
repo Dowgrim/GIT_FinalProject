@@ -65,5 +65,8 @@ public class Room {
     private String description;
 
     public void display(){}
-    public void tryUnlock(ArrayList<Item> bag){}
+
+    public boolean tryUnlock(ArrayList<Item> bag){
+        return true;
+    }
 }

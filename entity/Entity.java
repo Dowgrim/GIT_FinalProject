@@ -13,8 +13,8 @@ import java.util.*;
 public class Entity {
     private int energy;    // Energy level of the player
     private int fragments; // Number of fragments the player has
-    private ArrayList<Item> bag = new ArrayList(); // The items the player picked up
-    public Room currentRoom = null; // The room in which the player currently is
+    private ArrayList<Item> bag; // The items the player picked up
+    public Room currentRoom; // The room in which the player currently is
 
     public Entity () {
         this.energy = 100; // The player begins with 100 energy points
@@ -59,14 +59,12 @@ public class Entity {
             System.out.println("Valeur saisie incorrecte ...");
             try {
                 choice = scan.nextInt();
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 System.out.println("Ce n'est pas un numéro !");
                 choice = 0;
                 scan.nextLine();
             }
         }
-        // CAS A GERER: POSSIBILITE D'ENTRER DANS LA SALLE (clef, torche etc) //
         System.out.println("Vous allez à la salle " + (choice));
         currentRoom = currentRoom.getExits().get(choice-1);
     }

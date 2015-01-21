@@ -22,9 +22,6 @@ public class Room {
         this.description = description;
     }
 
-    public Room() {
-    }
-
     public ArrayList<Room> getExits() {
         return exits;
     }
@@ -74,4 +71,10 @@ public class Room {
     }
 
     public void enter(Entity player){}
+
+    public void printExits() {
+        for (int i = 0; i < exits.size(); i++) {
+            System.out.println((i+1) + ": " + exits.get(i));
+        }
+    }
 }

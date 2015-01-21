@@ -130,15 +130,6 @@ public class Game {
     }
 
     /**
-     * Generates items for each room
-     */
-    public void generateAllItems() {
-        for (Room r : map) {
-            r.generateItems();
-        }
-    }
-
-    /**
      * "Quit" was entered. Check the rest of the command to see whether we
      * really quit the game.
      *

@@ -69,4 +69,6 @@ public class Room {
     public boolean tryUnlock(ArrayList<Item> bag){
         return true;
     }
+
+    public void enter(Entity player){}
 }

@@ -1,8 +1,10 @@
 package room;
 
+import craft.Crafter;
 import entity.Entity;
 import item.Item;
 import item.Key;
+import trap.Trap;
 
 import java.util.ArrayList;
 
@@ -14,14 +16,18 @@ public class SpecialRoom extends Room{
     private boolean locked, fragment;
     private ArrayList<Item> itemNeeded = new ArrayList<Item>();
     private ArrayList<Item> itemContained = new ArrayList<Item>();
+    private Trap trap;
+    private Crafter crafter;
 
     public SpecialRoom(ArrayList<Room> exits, int number, int x, int y, String description, boolean locked,
-                       boolean fragment, ArrayList<Item> itemNeeded, ArrayList<Item> itemContained) {
+                       boolean fragment, ArrayList<Item> itemNeeded, ArrayList<Item> itemContained, Crafter crafter, Trap trap) {
         super(exits, number, x, y, description);
         this.locked = locked;
         this.fragment = fragment;
         this.itemNeeded = itemNeeded;
         this.itemContained = itemContained;
+        this.crafter = crafter;
+        this.trap = trap;
     }
 
     public boolean isFragment() {
@@ -65,6 +71,8 @@ public class SpecialRoom extends Room{
         locked = false;
         return true;
     }
+
+    public void enter(Entity player){}
 
 
  }

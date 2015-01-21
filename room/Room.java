@@ -22,6 +22,9 @@ public class Room {
         this.description = description;
     }
 
+    public Room() {
+    }
+
     public ArrayList<Room> getExits() {
         return exits;
     }

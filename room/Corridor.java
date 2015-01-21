@@ -1,7 +1,16 @@
 package room;
 
+import java.util.ArrayList;
+
 /**
  * Created by user on 19/01/2015.
  */
-public class Corridor {
+public class Corridor extends Room {
+    public Corridor(ArrayList<Room> exits, int number, int x, int y, String description) {
+        super(exits, number, x, y, description);
+    }
+
+    public Corridor(){
+
+    }
 }

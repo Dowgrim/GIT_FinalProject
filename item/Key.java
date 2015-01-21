@@ -13,6 +13,10 @@ public class Key extends Item {
         this.rooms = rooms;
     }
 
+    public Key(String desc) {
+        super(desc);
+    }
+
     public ArrayList<Integer> getRooms() {
         return rooms;
     }

@@ -1,9 +1,12 @@
 import craft.Crafter;
+import entity.Entity;
 import item.Item;
 import room.Corridor;
 import room.Room;
 import trap.Trap;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Random;
@@ -16,10 +19,26 @@ public class Game {
 
     private Random rand;
 
+
+    // Command manager
+    private final static command.CommandManager cmd = new command.CommandManager();
+
+    //The player
+    Entity player = new Entity();
+
+
+
     public Game() {
     }
 
-    public Game createRandomFloor(int x, int y){
+    public void createRandomGame(){
+
+
+
+    }
+}
+
+    public Room createRandomFloor(int x, int y){
 
         Random rand = new Random();
 
@@ -28,6 +47,7 @@ public class Game {
 
         //Si un fragment a déjà été ajouté à l'étage ou pas
         boolean frag = false;
+
 
 
         Room r;
@@ -104,6 +124,50 @@ public class Game {
 
     public Trap createRandomTrap(int rand){
 
+    }
+
+    public void start() {
+        registerCommands();
+
+        System.out.println(I18n.get("welcome"));
+        System.out.println(I18n.get("start"));
+
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
+            for (String command = reader.readLine(); !"stop".equalsIgnoreCase(command); command = reader.readLine()) {
+                if (player.isPlaying()) {
+                    command = player.getPlaying() + " " + command;
+                }
+                if (player.isWorking()) {
+                    command = "work " + command;
+                }
+                cmd.dispatch(command);
+            }
+        } catch (Exception e) {
+            System.out.println(I18n.get("error.is"));
+            e.printStackTrace();
+        }
+    }
+
+
+    /**
+     * Register all commands.
+     */
+    public static void registerCommands() {
+        // Misc commands
+        cmd.register(new HelpCommand());
+        cmd.register(new VersionCommand());
+
+        // Manage commands
+        cmd.register(new LanguageCommand());
+
+        // Game commands
+        cmd.register(new StartCommand());
+        cmd.register(new BuildingCommand());
+        cmd.register(new PlayerCommand());
+        cmd.register(new MoveCommand());
+        cmd.register(new ItemCommand());
+        cmd.register(new FunCommand());
+        cmd.register(new WorkCommand());
     }
 
 }

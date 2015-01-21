@@ -1,8 +1,5 @@
 package command;
 
-import com.google.common.base.Splitter;
-import com.google.common.base.Strings;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -10,7 +7,7 @@ import java.util.List;
 public class CommandArguments {
 
     // Space splitter
-    private final static Splitter SPACE = Splitter.on(" ").trimResults().omitEmptyStrings();
+    private final static String SPACE = Splitter.on(" ").trimResults().omitEmptyStrings();
     // List of String arguments
     private List<String> arguments;
     // Flag

@@ -5,12 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 public final class CommandManager {
 
     // Map containing all registered commands
-    private Map<String, Command> commands = new HashMap<>();
+    private Map<String, Command> commands = new HashMap<String, Command>();
 
     /**
      * Dispatch a command coming from the console

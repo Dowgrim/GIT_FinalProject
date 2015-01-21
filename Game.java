@@ -1,3 +1,4 @@
+import com.sun.org.apache.xml.internal.security.utils.I18n;
 import craft.Crafter;
 import entity.Entity;
 import item.Item;
@@ -24,7 +25,13 @@ public class Game {
     private final static command.CommandManager cmd = new command.CommandManager();
 
     //The player
-    Entity player = new Entity();
+    private Entity player = new Entity();
+
+    //List of first Room of all floor
+    private ArrayList<Room> firstRooms = new ArrayList<Room>();
+
+    //If the game have been initialized
+    private boolean isInitialized = false;
 
 
 
@@ -57,36 +64,42 @@ public class Game {
         if(rand.nextInt(10) >= 5){
             r = new Corridor();
         }else{
-            ArrayList<Trap> pieges = new ArrayList<Trap>();
+
             ArrayList<Item> FloorItem = new ArrayList<Item>();
             boolean keyFrag = false;
             ArrayList<Item> ItemNeeded = new ArrayList<Item>();
             boolean lock = false;
             Crafter craft;
+            Trap trap;
 
             //Salle Piégé
-            if(rand.nextInt(10) >= 5){
-                pieges.add(createRandomTrap(rand.nextInt(DATA.getPieges().size())));
+            if(rand.nextInt(10) >= 6){
+                trap = createRandomTrap();
             }
+
             for(int j = rand.nextInt(3); j > 0; j--){
                 if(rand.nextInt(10) >= 5) {
                     FloorItem.add(createRandomItem(rand.nextInt(DATA.getItems().size())));
                 }
             }
+
             if(!frag && rand.nextInt(20) == 0){
                 keyFrag = true;
                 frag = true;
             }
+
             for(int j = rand.nextInt(3); j > 0; j--){
                 if(rand.nextInt(10) >= 5){
                     ItemNeeded.add(createRandomItemNeeded(rand.nextInt(Data.getItemsNeeded().size())));
                 }
             }
+
             if(rand.nextInt(10) >= 5){
                 lock = true;
             }
+
             if(rand.nextInt(20) == 0){
-                craft =
+                craft = createRandomCraft();
             }
 
 
@@ -112,17 +125,21 @@ public class Game {
     }
 
 
+    public Crafter createRandomCraft(){
 
-    public Item createRandomItemNeeded(int rand){
+
+    }
+
+    public Item createRandomItemNeeded(){
 
     }
 
 
-    public Item createRandomItem(int rand){
+    public Item createRandomItem(){
 
     }
 
-    public Trap createRandomTrap(int rand){
+    public Trap createRandomTrap(){
 
     }
 
@@ -134,12 +151,6 @@ public class Game {
 
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
             for (String command = reader.readLine(); !"stop".equalsIgnoreCase(command); command = reader.readLine()) {
-                if (player.isPlaying()) {
-                    command = player.getPlaying() + " " + command;
-                }
-                if (player.isWorking()) {
-                    command = "work " + command;
-                }
                 cmd.dispatch(command);
             }
         } catch (Exception e) {
@@ -148,6 +159,9 @@ public class Game {
         }
     }
 
+    public boolean isInitialized() {
+        return isInitialized;
+    }
 
     /**
      * Register all commands.

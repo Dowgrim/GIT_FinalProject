@@ -1,11 +1,7 @@
 package command;
 
-import com.google.common.base.Strings;
-
 import java.util.Collections;
 import java.util.List;
-
-import static com.google.common.base.Preconditions.checkArgument;
 
 public abstract class Command {
 
@@ -21,8 +17,6 @@ public abstract class Command {
      * @param description Command description
      */
     public Command(String name, String description) {
-        checkArgument(!Strings.isNullOrEmpty(name), "Command name can't be null or empty.");
-        checkArgument(!Strings.isNullOrEmpty(description), "Command description can't be null or empty");
         this.name = name;
         this.description = description;
     }

@@ -2,6 +2,7 @@ package command.game;
 
 import command.Command;
 import command.CommandArguments;
+import entity.Game;
 
 public class GameCommand extends Command {
 
@@ -19,7 +20,7 @@ public class GameCommand extends Command {
      * Triggered when game command is called
      */
     public boolean isInitialized() {
-        if (!Zuul.getBuilding().isInitialized()) {
+        if (!Game.isInitialized()) {
             System.out.println(I18n.get("game.not.start"));
             return false;
         }

@@ -10,19 +10,26 @@ import java.util.*;
  * Edited by Nicolas
  */
 
-public class Entity {
+public class Entity extends Living {
     private int energy;    // Energy level of the player
     private int fragments; // Number of fragments the player has
     private ArrayList<Item> bag; // The items the player picked up
-    public Room currentRoom; // The room in which the player currently is
+    private int weakness;
+
 
     public Entity () {
         this.energy = 100; // The player begins with 100 energy points
         this.fragments = 0; // The player begins with no fragment
+        this.weakness = 0; // The player begins without any power-down
     }
 
-    public void setCurrentRoom(Room room) {
-        this.currentRoom = room;
+
+    public int getWeakness() {
+        return this.weakness;
+    }
+
+    public void setWeakness(int weak) {
+        this.weakness = weak;
     }
 
     /**
@@ -39,10 +46,6 @@ public class Entity {
      */
     public void increaseEnergy(int points) {
         this.energy += points;
-    }
-
-    public Room getCurrentRoom() {
-        return this.currentRoom;
     }
 
     /**

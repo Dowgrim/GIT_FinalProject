@@ -1,4 +1,5 @@
-package entity;
+package moteur.entity;
+
 
 /**
  * Created by Nicolas on 20/01/15.

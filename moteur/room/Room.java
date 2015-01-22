@@ -73,7 +73,9 @@ public class Room {
         return true;
     }
 
-    public void enter(Entity player){}
+    public void enter(Entity player){
+        System.out.println(description);
+    }
 
     public boolean haveCorridorExit(){
         for(Door ex : exits){

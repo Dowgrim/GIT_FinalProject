@@ -1,5 +1,7 @@
 package moteur.item;
 
+import moteur.entity.Entity;
+
 /**
  * Created by user on 19/01/2015.
  */
@@ -17,6 +19,10 @@ public class Usable extends Item{
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void consume(Entity player){
+        System.out.println("Ceci n'est pas un objet consommable !");
     }
 
     public boolean equals(Item item){

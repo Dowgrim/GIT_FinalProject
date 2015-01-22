@@ -80,8 +80,9 @@ public class SpecialRoom extends Room{
 
     @Override
     public void enter(Entity player){
-        boolean unlocked = tryUnlock(player.getBag());
-        if (unlocked) {
+        super.enter(player);
+        tryUnlock(player.getBag());
+        if (!(locked)) {
             trap.trap(player);
             if (!(player.getCurrentRoom().equals(this))) { //checks if the player got out of the room because of trap
                 return;

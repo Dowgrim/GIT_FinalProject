@@ -1,6 +1,5 @@
 package moteur.room;
 
-import moteur.door.Door;
 import moteur.entity.Entity;
 
 import java.util.ArrayList;
@@ -19,7 +18,7 @@ public class Checkpoint extends Room{
         this.player = player;
     }
 
-    public Checkpoint(ArrayList<Door> exits, int number, int x, int y, String description, Entity player) {
+    public Checkpoint(ArrayList<Room> exits, int number, int x, int y, String description, Entity player) {
         super(exits, number, x, y, description);
         this.player = player;
 

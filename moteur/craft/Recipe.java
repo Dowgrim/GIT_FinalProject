@@ -1,33 +1,11 @@
 package moteur.craft;
 
-import moteur.data.Plants;
 import moteur.entity.Entity;
-import moteur.item.Item;
-import moteur.item.Usable;
-
-import java.util.ArrayList;
 
 /**
- * Created by user on 20/01/2015.
+ * Created by user on 21/01/2015.
  */
-public enum Recipe {
-
-    HEALTHPOTION(new Usable(Plants.arnica,"Arnica"), new Usable(Plants.acerola,"Acerola")),
-    SUPERHEALTHPOTION(new Usable(Plants.arnica,"Arnica"),new Usable(Plants.acerola,"Acerola"), new Usable(Plants.aubepine,"Aubépine")),
-    STRENGTHPOTION(),
-    AXE();
-
-    private ArrayList<Item> itemsNeeded = new ArrayList<Item>();
-
-    private Recipe(Item... items){
-        for(int i=0;i<items.length;++i){
-            itemsNeeded.add(items[i]);
-        }
-    }
-
-    public void create(Entity player){
-
-    }
-
-
+public interface Recipe {
+    public boolean canCreate(Entity player);
+    public void create(Entity player);
 }

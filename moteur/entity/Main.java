@@ -1,6 +1,4 @@
-package moteur.entity;
-
-import vue.Game;
+package entity;
 
 /**
  * Created by Nicolas on 20/01/15.

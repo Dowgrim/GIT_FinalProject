@@ -84,8 +84,11 @@ public class Room {
         return false;
     }
 
-    public String printExits(){
-        //TODO
-        return "lol";
+    public void printExits() {
+        for (int i = 0; i < exits.size(); i++) {
+            System.out.println((i+1) + ": " + exits.get(i));
+        }
     }
+
+
 }

@@ -8,4 +8,5 @@ public class Plants {
     public static String acerola = new String("Une feuille d'Acerola.");
     public static String aubepine = new String("Une feuille d'Aubépine.");
     public static String ginseng = new String("Un morceau de Ginseng.");
+    public static String echinacee = new String("Une fleur d'Echinacée.");
 }

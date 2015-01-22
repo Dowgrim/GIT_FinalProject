@@ -1,146 +1,203 @@
-package entity;
+package moteur;
 
-import commands.*;
-import room.*;
-import java.util.*;
+import com.sun.org.apache.xml.internal.security.utils.I18n;
+import moteur.craft.Crafter;
+import moteur.door.Door;
+import moteur.entity.Entity;
+import moteur.item.Item;
+import moteur.room.Checkpoint;
+import moteur.room.Corridor;
+import moteur.room.Room;
+import moteur.trap.Trap;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Random;
 
 /**
- * Created by Nicolas on 20/01/15.
+ * Created by Michael on 20/01/2015.
  */
-
-
 public class Game {
-    private Parser parser;
-    private ArrayList<Room> map = new ArrayList<Room>();
-    public static Entity player;
-    private Locale locale;
-    public static ResourceBundle resource;
 
-    /**
-     * Create the game and initialize its internal map.
-     */
+
+    private Random rand = new Random();
+
+    private Entity player;
+
+    //List of first Room of all floor
+    private ArrayList<Room> firstRooms = new ArrayList<Room>();
+
+    //If the game have been initialized
+    private boolean isInitialized = false;
+
+
+
     public Game() {
-        this.player = new Entity();
-        createRooms(); // Creates all the rooms
-        parser = new Parser();
-        chooseLanguage();
+
     }
 
-    /**
-     * Create all the rooms and link their exits together.
-     */
-    private void createRooms() {
-        // create the rooms
-    }
+    /*public void createRandomGame(int nbFloor, ArrayList<Integer> Xs, ArrayList<Integer> Ys, Entity player){
+        ArrayList<ArrayList<Room>> allRooms = new ArrayList<ArrayList<Room>>();
 
-    /**
-     * Main play routine. Loops until end of play.
-     */
-    public void play() {
-        printWelcome();
-
-        // Enter the main command loop. Here we repeatedly read commands and
-        // execute them until the game is over.
-        boolean finished = false;
-        while (!finished) {
-            Command command = parser.getCommand();
-            finished = processCommand(command);
+        for(int i = 0; i < nbFloor; i++) {
+            allRooms.add(createRandomFloor(Xs.get(i), Ys.get(i)));
         }
-        System.out.println("Merci d'avoir joué à ce jeu !");
-    }
+    }*/
 
-    /**
-     * Print out the opening message for the player.
-     */
-    private void printWelcome() {
-        System.out.println();
-        System.out.println("Bienvenue dans notre jeu !");
-        System.out.println(("Préparez-vous à affronter de nombreuses épreuves !"));
-        System.out.println("Tapez 'help' si vous ne savez pas quoi faire..");
-        System.out.println();
-    }
 
-    /**
-     * Chooses the language for the game
-     */
-    public void chooseLanguage() {
-        locale = Locale.getDefault();
-        Scanner scan = new Scanner(System.in);
-        System.out.println("Veuillez saisir la langue souhaitée (fr/eng):");
-        String str = scan.nextLine();
-        while (!(str.equals("fr")) && !(str.equals("eng"))) { // While he made a wrong choice, restart it
-            System.out.println("Cette langue n'existe pas, saisissez en une autre:");
-            str = scan.nextLine();
-        }
-        if (str.equals("eng")) { // If he chose english, changes the locale to the english one
-            locale = new Locale("en", "US");
-        }
-        resource = ResourceBundle.getBundle("zuul.languages.Zuul", locale); // Loads the resourceBundle
-    }
+   /* public ArrayList<Room> createRandomFloor(int nb, int x, int y, Entity player, int posX, int posY){
 
-    /**
-     * Given a command, process (that is: execute) the command.
-     *
-     * @param command
-     *            The command to be processed.
-     * @return true If the command ends the game, false otherwise.
-     */
-    private boolean processCommand(Command command) {
-        boolean wantToQuit = false;
+        //rooms total de l'étage
+        ArrayList<Room> rooms = new ArrayList<Room>();
 
-        CommandWord commandWord = command.getCommandWord();
+        ArrayList<Corridor> corridors;
 
-        switch (commandWord) {
-            case UNKNOWN:
-                System.out.println("Cette commande n'existe pas !");
-                break;
+        ArrayList<Door> doors;
 
-            case HELP:
-                printHelp();
-                break;
+        rooms.add(new Checkpoint(nb+'0'+'0', 1, 1, player));
 
-            case GO:
-                player.goRoom();
-                break;
+        for(int i = 0; i < ((x*y)/3)+rand.nextInt(x);  i++){
+                //Corridor ou room
+                if(rand.nextInt(10) >= 5){
+                    r = new Corridor();
 
-            case QUIT:
-                wantToQuit = quit(command);
-                break;
 
-            case BAG:
-                player.printBag();
-                break;
+
+
+
+
+
+                }else{
+
+                    ArrayList<Item> FloorItem = new ArrayList<Item>();
+                    boolean keyFrag = false;
+                    ArrayList<Item> ItemNeeded = new ArrayList<Item>();
+                    boolean lock = false;
+                    Crafter craft;
+                    Trap trap;
+
+                    //Salle Piégé
+                    if(rand.nextInt(10) >= 6){
+                        trap = createRandomTrap();
+                    }
+
+                    for(int j = rand.nextInt(3); j > 0; j--){
+                        if(rand.nextInt(10) >= 5) {
+                            FloorItem.add(createRandomItem(rand.nextInt(DATA.getItems().size())));
+                        }
+                    }
+
+                    if(!frag && rand.nextInt(20) == 0){
+                        keyFrag = true;
+                        frag = true;
+                    }
+
+                    for(int j = rand.nextInt(3); j > 0; j--){
+                        if(rand.nextInt(10) >= 5){
+                            ItemNeeded.add(createRandomItemNeeded(rand.nextInt(Data.getItemsNeeded().size())));
+                        }
+                    }
+
+                    if(rand.nextInt(10) >= 5){
+                        lock = true;
+                    }
+
+                    if(rand.nextInt(20) == 0){
+                        craft = createRandomCraft();
+                    }
+                }
+
         }
 
-        return wantToQuit;
+
+    return null;
+   }
+
+
+    public ArrayList<Room> generateCorridors(Random rand){
+        ArrayList<Room> rooms = new ArrayList<Room>();
+        if(rand.nextInt(10) >= 5){
+            rooms.add(new Corridor());
     }
 
-    // implementations of user commands:
 
-    /**
-     * Print out some help information. Here we print some stupid, cryptic
-     * message and a list of the command words.
-     */
-    private void printHelp() {
-        System.out.println("Vous devez trouver des fragments de clef pour avancer dans le jeu.");
-        System.out.println("Allez de salle en salle pour progresser !");
-        System.out.println();
-        System.out.println("Les commandes que vous pouvez utiliser :");
-        parser.showCommands();
+    public Crafter createRandomCraft(){
+
+
+    }
+
+    public Item createRandomItemNeeded(){
+
+    }
+
+
+    public Item createRandomItem(){
+
+    }
+
+    public Trap createRandomTrap(){
+
+    }*/
+
+    public void start() {
+        //registerCommands();
+
+        System.out.println("Welcome !!");
+
+        /*try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
+            for (String command = reader.readLine(); !"stop".equalsIgnoreCase(command); command = reader.readLine()) {
+                cmd.dispatch(command);
+            }
+        } catch (Exception e) {
+            System.out.println(I18n.get("error.is"));
+            e.printStackTrace();
+        }*/
+
+        firstRooms.add(floor());
+
+
+
+    }
+
+    public Checkpoint floor(){
+
+        ArrayList<Room> rooms = new ArrayList<Room>();
+
+        Checkpoint cp = new Checkpoint(136, 1, 1, player);
+        rooms.add(cp);
+
+
+
+
+
+    }
+
+    public boolean isInitialized() {
+        return isInitialized;
     }
 
     /**
-     * "Quit" was entered. Check the rest of the command to see whether we
-     * really quit the game.
-     *
-     * @return true, if this command quits the game, false otherwise.
+     * Register all commands.
      */
-    private boolean quit(Command command) {
-        if (command.hasSecondWord()) {
-            System.out.println("Ne tapez que quit pour quitter..");
-            return false;
-        } else {
-            return true; // signal that we want to quit
-        }
+    /*public static void registerCommands() {
+        // Misc commands
+        cmd.register(new HelpCommand());
+        cmd.register(new VersionCommand());
+
+        // Manage commands
+        cmd.register(new LanguageCommand());
+
+        // Game commands
+        cmd.register(new StartCommand());
+        cmd.register(new BuildingCommand());
+        cmd.register(new PlayerCommand());
+        cmd.register(new MoveCommand());
+        cmd.register(new ItemCommand());
+        cmd.register(new FunCommand());
+        cmd.register(new WorkCommand());
+    }*/
+    public static void main(String[] args) {
+        Game game = new Game();
     }
 }

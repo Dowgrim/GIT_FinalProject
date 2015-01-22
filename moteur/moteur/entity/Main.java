@@ -1,0 +1,14 @@
+package moteur.entity;
+
+
+import moteur.Game;
+
+/**
+ * Created by Nicolas on 20/01/15.
+ */
+public class Main {
+    public static void main(String[] args) {
+        Game game = new Game();
+        game.play();
+    }
+}

@@ -23,8 +23,8 @@ public class Checkpoint extends Room{
         this.player = player;
     }
 
-    public Checkpoint(ArrayList<Door> exits, int number, int posX, int posY, String description, Entity player) {
-        super(exits, number, 0, 0, description);
+    public Checkpoint(int number, int posX, int posY, String description, Entity player) {
+        super(number, 0, 0, description);
         this.player = player;
         this.posX = posX;
         this.posY = posY;

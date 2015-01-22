@@ -32,7 +32,6 @@ public class Game {
         player = new Entity();
         firstRooms.set(0, floor());
         start();
-        player.
     }
 
     /*public void createRandomGame(int nbFloor, ArrayList<Integer> Xs, ArrayList<Integer> Ys, Entity player){

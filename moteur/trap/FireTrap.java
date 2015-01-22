@@ -8,6 +8,6 @@ import moteur.entity.Entity;
 public class FireTrap implements Trap {
     public FireTrap(){}
     public void trap(Entity player){
-        //code du piege de feu
+        player.decreaseEnergy(15);
     }
 }

@@ -1,6 +1,7 @@
 package room;
 
 import craft.Crafter;
+import door.Door;
 import entity.Entity;
 import item.Item;
 import item.Key;
@@ -19,7 +20,7 @@ public class SpecialRoom extends Room{
     private Trap trap;
     private Crafter crafter;
 
-    public SpecialRoom(ArrayList<Room> exits, int number, int x, int y, String description, boolean locked,
+    public SpecialRoom(ArrayList<Door> exits, int number, int x, int y, String description, boolean locked,
                        boolean fragment, ArrayList<Item> itemNeeded, ArrayList<Item> itemContained, Crafter crafter, Trap trap) {
         super(exits, number, x, y, description);
         this.locked = locked;

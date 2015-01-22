@@ -1,5 +1,6 @@
 package room;
 
+import door.Door;
 import entity.Entity;
 import item.*;
 
@@ -11,10 +12,10 @@ import java.util.ArrayList;
  */
 public class Room {
 
-    private ArrayList<Room> exits = new ArrayList<Room>();
+    private ArrayList<Door> exits = new ArrayList<Door>();
     private int number, x, y;
 
-    public Room(ArrayList<Room> exits, int number, int x, int y, String description) {
+    public Room(ArrayList<Door> exits, int number, int x, int y, String description) {
         this.exits = exits;
         this.number = number;
         this.x = x;
@@ -22,11 +23,14 @@ public class Room {
         this.description = description;
     }
 
-    public ArrayList<Room> getExits() {
+    public Room() {
+    }
+
+    public ArrayList<Door> getExits() {
         return exits;
     }
 
-    public void setExits(ArrayList<Room> exits) {
+    public void setExits(ArrayList<Door> exits) {
         this.exits = exits;
     }
 
@@ -72,9 +76,17 @@ public class Room {
 
     public void enter(Entity player){}
 
-    public void printExits() {
-        for (int i = 0; i < exits.size(); i++) {
-            System.out.println((i+1) + ": " + exits.get(i));
+    public boolean haveCorridorExit(){
+        for(Door ex : exits){
+            if(ex.getOtherExit(this) instanceof Corridor){
+                return true;
+            }
         }
+        return false;
+    }
+
+    public String printExits(){
+        //TODO
+        return "lol";
     }
 }

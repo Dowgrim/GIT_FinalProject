@@ -1,26 +1,29 @@
 package item;
 
+import door.Door;
+import entity.Entity;
+
 import java.util.ArrayList;
 
 /**
  * Created by Michael on 19/01/2015.
  */
 public class Key extends Item {
-    private ArrayList<Integer> rooms = new ArrayList<Integer>();
 
-    public Key(String desc, ArrayList<Integer> rooms) {
+    private ArrayList<Door> doors = new ArrayList<Door>();
+
+    public Key(String desc, ArrayList<Door> doors) {
         super(desc);
-        this.rooms = rooms;
+        this.doors = doors;
     }
 
     public Key(String desc) {
         super(desc);
     }
 
-    public ArrayList<Integer> getRooms() {
-        return rooms;
+    public ArrayList<Door> getDoors() {
+        return doors;
     }
-
 
     public boolean equals(Item item){
         if (this == item){
@@ -30,12 +33,18 @@ public class Key extends Item {
             return false;
         }
         else {
-            for (int i : ((Key)item).getRooms()){
-                if (!(this.rooms.contains(i))){
+            for (Door i : ((Key)item).getDoors()){
+                if (!(this.doors.contains(i))){
                     return false;
                 }
             }
             return true;
+        }
+    }
+
+    public void onObtaining(Entity player){
+        for(int i = 0; i < doors.size(); i++){
+            doors.get(i).unlock();
         }
     }
 }

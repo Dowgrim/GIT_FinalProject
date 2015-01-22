@@ -1,6 +1,9 @@
 package room;
 
+import craft.Crafter;
+import door.Door;
 import item.Item;
+import trap.Trap;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -9,12 +12,14 @@ import java.util.Random;
  * Created by user on 20/01/2015.
  */
 public class Teleporter extends SpecialRoom{
-    private ArrayList<Room> potentialsExits = new ArrayList<Room>();
+    public static ArrayList<Room> potentialsExits = new ArrayList<Room>();
 
-    public Teleporter(ArrayList<Room> exits, int number, int x, int y, String description, boolean locked, boolean fragment,
-                      ArrayList<Item> itemNeeded, ArrayList<Item> itemContained) {
-        super(new ArrayList<Room>(), number, x, y, description, locked, fragment, itemNeeded, itemContained);
-        this.potentialsExits = exits;
+    private Room teleporExit;
+
+    public Teleporter(ArrayList<Door> exits, int number, int x, int y, String description, boolean locked,
+                      boolean fragment, ArrayList<Item> itemNeeded, ArrayList<Item> itemContained, Crafter crafter, Trap trap, Room telepor) {
+        super(exits, number, x, y, description, locked, fragment, itemNeeded, itemContained, crafter, trap);
+        this.teleporExit = telepor;
     }
 
     public ArrayList<Room> getPotentialsExits() {
@@ -27,10 +32,13 @@ public class Teleporter extends SpecialRoom{
 
     //le teleporteur a une seule sortie qui change à chaque tour, selectionnée parmis les potentialsExits
     public void generateExit(){
-        this.setExits(new ArrayList<Room>());
+        this.setPotentialsExits(new ArrayList<Room>());
         Random rnd = new Random();
         int exit = rnd.nextInt(potentialsExits.size());
         Room destination = potentialsExits.get(exit);
-        this.getExits().add(destination);
+        teleporExit = destination;
     }
+
+
+
 }

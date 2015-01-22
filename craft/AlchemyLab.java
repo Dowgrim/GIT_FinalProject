@@ -11,4 +11,5 @@ public class AlchemyLab implements Crafter{
     public void craft(Entity player){
         //code du labo d'alchimie
     }
+
 }

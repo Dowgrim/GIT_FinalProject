@@ -1,5 +1,6 @@
 import com.sun.org.apache.xml.internal.security.utils.I18n;
 import craft.Crafter;
+import door.Door;
 import entity.Entity;
 import item.Item;
 import room.Corridor;
@@ -33,83 +34,85 @@ public class Game {
     //If the game have been initialized
     private boolean isInitialized = false;
 
+    Random rand = new Random();
+
 
 
     public Game() {
     }
 
-    public void createRandomGame(){
+    public void createRandomGame(int nbFloor, ArrayList<Integer> Xs, ArrayList<Integer> Ys){
+        ArrayList<ArrayList<Room>> allRooms = new ArrayList<ArrayList<Room>>();
 
-
-
+        for(int i = 0; i < nbFloor; i++) {
+            allRooms.add(createRandomFloor(Xs.get(i), Ys.get(i)));
+        }
     }
-}
 
-    public Room createRandomFloor(int x, int y){
 
-        Random rand = new Random();
+    public ArrayList<Room> createRandomFloor(int x, int y){
+
+
 
         //rooms total de l'étage
         ArrayList<Room> rooms;
 
-        //Si un fragment a déjà été ajouté à l'étage ou pas
-        boolean frag = false;
+        ArrayList<Corridor> corridors;
 
-
-
-        Room r;
-
-
-        //Corridor ou room
-        if(rand.nextInt(10) >= 5){
-            r = new Corridor();
-        }else{
-
-            ArrayList<Item> FloorItem = new ArrayList<Item>();
-            boolean keyFrag = false;
-            ArrayList<Item> ItemNeeded = new ArrayList<Item>();
-            boolean lock = false;
-            Crafter craft;
-            Trap trap;
-
-            //Salle Piégé
-            if(rand.nextInt(10) >= 6){
-                trap = createRandomTrap();
-            }
-
-            for(int j = rand.nextInt(3); j > 0; j--){
-                if(rand.nextInt(10) >= 5) {
-                    FloorItem.add(createRandomItem(rand.nextInt(DATA.getItems().size())));
-                }
-            }
-
-            if(!frag && rand.nextInt(20) == 0){
-                keyFrag = true;
-                frag = true;
-            }
-
-            for(int j = rand.nextInt(3); j > 0; j--){
-                if(rand.nextInt(10) >= 5){
-                    ItemNeeded.add(createRandomItemNeeded(rand.nextInt(Data.getItemsNeeded().size())));
-                }
-            }
-
-            if(rand.nextInt(10) >= 5){
-                lock = true;
-            }
-
-            if(rand.nextInt(20) == 0){
-                craft = createRandomCraft();
-            }
-
-
-        }
-
+        ArrayList<Door> doors;
 
 
         for(int i = 0; i < x;  i++){
             for(int j = 0; j < y; j++) {
+                //Corridor ou room
+                if(rand.nextInt(10) >= 5){
+                    r = new Corridor();
 
+
+
+
+
+
+
+                }else{
+
+                    ArrayList<Item> FloorItem = new ArrayList<Item>();
+                    boolean keyFrag = false;
+                    ArrayList<Item> ItemNeeded = new ArrayList<Item>();
+                    boolean lock = false;
+                    Crafter craft;
+                    Trap trap;
+
+                    //Salle Piégé
+                    if(rand.nextInt(10) >= 6){
+                        trap = createRandomTrap();
+                    }
+
+                    for(int j = rand.nextInt(3); j > 0; j--){
+                        if(rand.nextInt(10) >= 5) {
+                            FloorItem.add(createRandomItem(rand.nextInt(DATA.getItems().size())));
+                        }
+                    }
+
+                    if(!frag && rand.nextInt(20) == 0){
+                        keyFrag = true;
+                        frag = true;
+                    }
+
+                    for(int j = rand.nextInt(3); j > 0; j--){
+                        if(rand.nextInt(10) >= 5){
+                            ItemNeeded.add(createRandomItemNeeded(rand.nextInt(Data.getItemsNeeded().size())));
+                        }
+                    }
+
+                    if(rand.nextInt(10) >= 5){
+                        lock = true;
+                    }
+
+                    if(rand.nextInt(20) == 0){
+                        craft = createRandomCraft();
+                    }
+                }
             }
         }
 

@@ -1,5 +1,7 @@
 package moteur.item;
 
+import moteur.entity.Entity;
+
 /**
  * Created by user on 22/01/2015.
  */
@@ -17,5 +19,9 @@ public class FightingItem extends Item {
 
     public void setStrength(int strength) {
         this.strength = strength;
+    }
+
+    public void use(Entity player){
+        
     }
 }

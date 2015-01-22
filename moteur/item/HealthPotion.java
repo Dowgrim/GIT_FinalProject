@@ -16,5 +16,6 @@ public class HealthPotion extends Item {
     public void consume(Entity player){
         System.out.println("Vous gagnez "+energyRestoration+" points de vie");
         player.increaseEnergy(energyRestoration);
+        player.getBag().remove(this);
     }
 }

@@ -29,7 +29,10 @@ public class Game {
 
 
     public Game() {
-
+        player = new Entity();
+        firstRooms.set(0, floor());
+        start();
+        player.
     }
 
     /*public void createRandomGame(int nbFloor, ArrayList<Integer> Xs, ArrayList<Integer> Ys, Entity player){
@@ -174,38 +177,100 @@ public class Game {
         Room r5 = new SpecialRoom(104, 1, 1, "Room5");
         Room r6 = new SpecialRoom(116, 1, 1, "Room6");
         Room r7 = new SpecialRoom(126, 1, 1, "Room6");
+        Room r8 = new SpecialRoom(105, 1, 1, "Room8");
 
         ArrayList<Room> ar1 = new ArrayList<Room>();
         ar1.add(cp);
         ar1.add(co1);
         Door d1 = new Door(13536, 0, ar1);
+        cp.addDoor(d1, 0);
+        co1.addDoor(d1, 2);
 
         ArrayList<Room> ar2 = new ArrayList<Room>();
         ar2.add(co1);
         ar2.add(co2);
         Door d2 = new Door(13525, 0, ar2);
+        co1.addDoor(d2, 3);
+        co2.addDoor(d2, 1);
 
         ArrayList<Room> ar3 = new ArrayList<Room>();
-        ar2.add(co2);
-        ar2.add(co3);
-        Door d3 = new Door(13525, 0, ar3);
+        ar3.add(co2);
+        ar3.add(co3);
+        Door d3 = new Door(12515, 0, ar3);
+        co2.addDoor(d3, 3);
+        co3.addDoor(d3, 1);
 
         ArrayList<Room> ar4 = new ArrayList<Room>();
-        ar2.add(co3);
-        ar2.add(co4);
-        Door d4 = new Door(13525, 0, ar4);
+        ar4.add(co3);
+        ar4.add(co4);
+        Door d4 = new Door(11514, 0, ar4);
+        co3.addDoor(d4, 0);
+        co4.addDoor(d4, 2);
 
         ArrayList<Room> ar5 = new ArrayList<Room>();
-        ar2.add(co1);
-        ar2.add(r1);
-        Door d5 = new Door(13525, 0, ar5);
+        ar5.add(co1);
+        ar5.add(r1);
+        Door d5 = new Door(13545, 0, ar5);
+        co1.addDoor(d5, 1);
+        r1.addDoor(d5, 3);
 
         ArrayList<Room> ar6 = new ArrayList<Room>();
-        ar2.add(co3);
-        ar2.add(co4);
-        Door d6 = new Door(13525, 0, ar6);
+        ar6.add(co1);
+        ar6.add(r2);
+        Door d6 = new Door(13534, 0, ar6);
+        co1.addDoor(d6, 0);
+        r2.addDoor(d6, 2);
 
+        ArrayList<Room> ar7 = new ArrayList<Room>();
+        ar7.add(co2);
+        ar7.add(r7);
+        Door d7 = new Door(12526, 0, ar7);
+        co2.addDoor(d7, 2);
+        r7.addDoor(d7, 0);
 
+        ArrayList<Room> ar8 = new ArrayList<Room>();
+        ar8.add(co2);
+        ar8.add(r3);
+        Door d8 = new Door(12524, 0, ar8);
+        co2.addDoor(d8, 0);
+        r3.addDoor(d8, 2);
+
+        ArrayList<Room> ar9 = new ArrayList<Room>();
+        ar9.add(co4);
+        ar9.add(r5);
+        Door d9 = new Door(13534, 0, ar9);
+        co4.addDoor(d9, 3);
+        r5.addDoor(d9, 1);
+
+        ArrayList<Room> ar10 = new ArrayList<Room>();
+        ar10.add(co4);
+        ar10.add(r4);
+        Door d10 = new Door(13534, 0, ar10);
+        co4.addDoor(d10, 0);
+        r4.addDoor(d10, 2);
+
+        ArrayList<Room> ar11 = new ArrayList<Room>();
+        ar11.add(co4);
+        ar11.add(r3);
+        Door d11 = new Door(13534, 0, ar11);
+        co4.addDoor(d11, 1);
+        r3.addDoor(d11, 3);
+
+        ArrayList<Room> ar12 = new ArrayList<Room>();
+        ar12.add(co3);
+        ar12.add(r6);
+        Door d12 = new Door(13534, 0, ar11);
+        co3.addDoor(d12, 3);
+        r6.addDoor(d12, 1);
+
+        ArrayList<Room> ar13 = new ArrayList<Room>();
+        ar13.add(co3);
+        ar13.add(r7);
+        Door d13 = new Door(13534, 0, ar11);
+        co3.addDoor(d13, 1);
+        r7.addDoor(d13, 3);
+
+        //TODO finir ....
         return cp;
     }
 

@@ -31,11 +31,7 @@ public class Door {
             return;
         }
         if(state == 0){
-            if(rooms.get(0).equals(player.getCurrentRoom())){
-                player.setCurrentRoom(rooms.get(0));
-            } else{
-                player.setCurrentRoom(rooms.get(1));
-            }
+                player.setCurrentRoom(getOtherExit(player.getCurrentRoom()));
         }
         if(state >= 1){
             /*

@@ -15,7 +15,7 @@ public class AlchemyLab implements Crafter{
 
     private ArrayList<AlchemyRecipes> alchemy = new ArrayList<AlchemyRecipes>();
 
-    public AlchemyLab(){
+    public AlchemyLab() {
         ArrayList<AlchemyRecipes> alchemy =new ArrayList<AlchemyRecipes>(Arrays.asList(AlchemyRecipes.values()));
     }
     public void craft(Entity player){

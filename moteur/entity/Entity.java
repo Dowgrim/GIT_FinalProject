@@ -21,6 +21,10 @@ public class Entity {
         this.fragments = 0; // The player begins with no fragment
     }
 
+    public void setCurrentRoom(Room room) {
+        this.currentRoom = room;
+    }
+
     /**
      * Decreases the energy of the player by 'points'
      * @param points
@@ -39,37 +43,6 @@ public class Entity {
 
     public Room getCurrentRoom() {
         return this.currentRoom;
-    }
-
-    /**
-     * The player tries to go to another room
-     */
-    public void goRoom () {
-        System.out.println("Sorties disponibles :");
-        currentRoom.printExits();
-        int choice = 0;
-        Scanner scan = new Scanner(System.in);
-        try {
-            choice = scan.nextInt();
-        }
-        catch (Exception e) {
-            System.out.println("Ce n'est pas un numéro!");
-        }
-        while (choice <= 0 || choice > currentRoom.getExits().size()) {
-            System.out.println("Valeur saisie incorrecte ...");
-            try {
-                choice = scan.nextInt();
-            } catch (Exception e) {
-                System.out.println("Ce n'est pas un numéro !");
-                choice = 0;
-                scan.nextLine();
-            }
-        }
-        System.out.println("Vous allez à la salle " + (choice));
-        if (currentRoom.getExits().get(choice-1).tryUnlock(this.getBag())) {
-            currentRoom.getExits().get(choice-1).enter(this);
-            currentRoom = currentRoom.getExits().get(choice-1);
-        }
     }
 
     /**

@@ -5,11 +5,11 @@ import moteur.entity.Entity;
 /**
  * Created by user on 22/01/2015.
  */
-public class FightingItem extends Item {
+public class FightingItem extends Usable {
     private int strength;
 
-    public FightingItem(String desc, int strength) {
-        super(desc);
+    public FightingItem(String desc, String name, int strength) {
+        super(desc,name);
         this.strength = strength;
     }
 

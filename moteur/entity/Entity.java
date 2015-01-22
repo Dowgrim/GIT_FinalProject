@@ -5,6 +5,7 @@ import moteur.room.*;
 import java.util.*;
 
 
+
 /**
  * Created by Michael on 19/01/2015.
  * Edited by Nicolas
@@ -14,22 +15,31 @@ public class Entity extends Living {
     private int energy;    // Energy level of the player
     private int fragments; // Number of fragments the player has
     private ArrayList<Item> bag; // The items the player picked up
-    private int weakness;
+    private Map<Class<?>, Object> effects = new HashMap<Class<?>, Object>(); // Contains the effects applied to the player
 
 
     public Entity () {
         this.energy = 100; // The player begins with 100 energy points
         this.fragments = 0; // The player begins with no fragment
-        this.weakness = 0; // The player begins without any power-down
     }
 
-
-    public int getWeakness() {
-        return this.weakness;
+    /**
+     * The effects currently applied to the player
+     * @return HashMap
+     */
+    public void addEffect(Effect effect) {
+        Effect old = effect.getClass().cast(effects.get(effect.getClass()));
+        if (old == null) {
+            effects.put(effect.getClass(), this);
+        } else {
+            if (old.getPower() < effect.getPower()) {
+                effects.put(effect.getClass(), this);
+            }
+        }
     }
 
-    public void setWeakness(int weak) {
-        this.weakness = weak;
+    public void removeEffect(Effect effect) {
+        effects.remove(effect);
     }
 
     /**

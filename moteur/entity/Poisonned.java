@@ -3,14 +3,15 @@ package moteur.entity;
 /**
  * Created by user on 22/01/15.
  */
-public class Poisonned implements Effect{
-    private int power;
+public class Poisonned extends Effect{
 
-    public Poisonned (int power) {
-        this.power = power;
+    public Poisonned(int power) {
+        super(power);
     }
 
-    public void apply (Entity player) {
-
+    @Override
+    public void apply(Entity player) {
+        player.decreaseEnergy(this.getPower()*2);
     }
+
 }

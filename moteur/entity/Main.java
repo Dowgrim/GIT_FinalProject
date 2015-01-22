@@ -1,6 +1,8 @@
 package moteur.entity;
 
 
+import moteur.Game;
+
 /**
  * Created by Nicolas on 20/01/15.
  */

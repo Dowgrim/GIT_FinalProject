@@ -12,7 +12,8 @@ public class Corridor extends Room {
         super(exits, number, x, y, description);
     }
 
-    public Corridor(){
-
+    public Corridor(int number, int x, int y, String description) {
+        super(number, x, y, description);
     }
+
 }

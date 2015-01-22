@@ -14,16 +14,15 @@ import java.util.ArrayList;
  */
 public class SpecialRoom extends Room{
 
-    private boolean locked, fragment;
+    private boolean fragment;
     private ArrayList<Item> itemNeeded = new ArrayList<Item>();
     private ArrayList<Item> itemContained = new ArrayList<Item>();
     private Trap trap;
     private Crafter crafter;
 
-    public SpecialRoom(ArrayList<Door> exits, int number, int x, int y, String description, boolean locked,
+    public SpecialRoom(ArrayList<Door> exits, int number, int x, int y, String description,
                        boolean fragment, ArrayList<Item> itemNeeded, ArrayList<Item> itemContained, Crafter crafter, Trap trap) {
         super(exits, number, x, y, description);
-        this.locked = locked;
         this.fragment = fragment;
         this.itemNeeded = itemNeeded;
         this.itemContained = itemContained;
@@ -31,12 +30,13 @@ public class SpecialRoom extends Room{
         this.trap = trap;
     }
 
-    public boolean isFragment() {
-        return fragment;
+
+    public SpecialRoom(int number, int x, int y, String description) {
+        super(number, x, y, description);
     }
 
-    public boolean isLocked() {
-        return locked;
+    public boolean isFragment() {
+        return fragment;
     }
 
     public void setFragment(boolean frag) {
@@ -74,7 +74,6 @@ public class SpecialRoom extends Room{
                 return false;
             }
         }
-        locked = false;
         return true;
     }
 
@@ -82,7 +81,7 @@ public class SpecialRoom extends Room{
     public void enter(Entity player){
         super.enter(player);
         tryUnlock(player.getBag());
-        if (!(locked)) {
+        if (true) {
             trap.trap(player);
             if (!(player.getCurrentRoom().equals(this))) { //checks if the player got out of the room because of trap
                 return;

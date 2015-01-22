@@ -1,17 +1,12 @@
 package moteur;
 
-import com.sun.org.apache.xml.internal.security.utils.I18n;
-import moteur.craft.Crafter;
 import moteur.door.Door;
 import moteur.entity.Entity;
-import moteur.item.Item;
 import moteur.room.Checkpoint;
 import moteur.room.Corridor;
 import moteur.room.Room;
-import moteur.trap.Trap;
+import moteur.room.SpecialRoom;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -167,10 +162,51 @@ public class Game {
         Checkpoint cp = new Checkpoint(136, 1, 1, player);
         rooms.add(cp);
 
+        Corridor co1 = new Corridor(135, 1, 1, "Corridor1");
+        Corridor co2 = new Corridor(125, 1, 1, "Corridor2");
+        Corridor co3 = new Corridor(115, 1, 1, "Corridor3");
+        Corridor co4 = new Corridor(114, 1, 1, "Corridor4");
+
+        Room r1 = new SpecialRoom(145, 1, 1, "Room1");
+        Room r2 = new SpecialRoom(134, 1, 1, "Room2");
+        Room r3 = new SpecialRoom(124, 1, 1, "Room3");
+        Room r4 = new SpecialRoom(113, 1, 1, "Room4");
+        Room r5 = new SpecialRoom(104, 1, 1, "Room5");
+        Room r6 = new SpecialRoom(116, 1, 1, "Room6");
+        Room r7 = new SpecialRoom(126, 1, 1, "Room6");
+
+        ArrayList<Room> ar1 = new ArrayList<Room>();
+        ar1.add(cp);
+        ar1.add(co1);
+        Door d1 = new Door(13536, 0, ar1);
+
+        ArrayList<Room> ar2 = new ArrayList<Room>();
+        ar2.add(co1);
+        ar2.add(co2);
+        Door d2 = new Door(13525, 0, ar2);
+
+        ArrayList<Room> ar3 = new ArrayList<Room>();
+        ar2.add(co2);
+        ar2.add(co3);
+        Door d3 = new Door(13525, 0, ar3);
+
+        ArrayList<Room> ar4 = new ArrayList<Room>();
+        ar2.add(co3);
+        ar2.add(co4);
+        Door d4 = new Door(13525, 0, ar4);
+
+        ArrayList<Room> ar5 = new ArrayList<Room>();
+        ar2.add(co1);
+        ar2.add(r1);
+        Door d5 = new Door(13525, 0, ar5);
+
+        ArrayList<Room> ar6 = new ArrayList<Room>();
+        ar2.add(co3);
+        ar2.add(co4);
+        Door d6 = new Door(13525, 0, ar6);
 
 
-
-
+        return cp;
     }
 
     public boolean isInitialized() {

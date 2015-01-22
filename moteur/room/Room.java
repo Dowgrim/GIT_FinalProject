@@ -22,7 +22,11 @@ public class Room {
         this.description = description;
     }
 
-    public Room() {
+    public Room(int number, int x, int y, String description) {
+        this.number = number;
+        this.x = x;
+        this.y = y;
+        this.description = description;
     }
 
     public ArrayList<Door> getExits() {

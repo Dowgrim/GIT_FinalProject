@@ -1,5 +1,6 @@
 package moteur.room;
 
+import com.sun.org.apache.xpath.internal.SourceTree;
 import moteur.Game;
 import moteur.door.Door;
 import moteur.entity.Entity;
@@ -56,7 +57,9 @@ public class Room {
 
     public void display(){}
 
-    public void onEnter(Entity player){}
+    public void onEnter(Entity player){
+        printExits();
+    }
 
     public void onLeave(Entity player){}
 
@@ -69,6 +72,12 @@ public class Room {
         return false;
     }
 
+    public void printExits() {
+        System.out.println("Sorties disponibles :");
+        for (Integer r: exits.keySet()) {
+            System.out.println (r + ": " + exits.get(r).getOtherExit(this).getDescription());
+        }
+    }
     public void addDoor(Door door, int orientation){
         exits.put(orientation, door);
     }

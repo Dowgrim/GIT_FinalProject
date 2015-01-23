@@ -30,21 +30,24 @@ public class MoveCommand extends GameCommand {
                 showUsages();
                 return;
         }
-
-        int direction = Integer.parseInt(arguments.getArgument(0));
-
         try {
+            int direction = Integer.parseInt(arguments.getArgument(0));
             Room r = Game.getPlayer().getCurrentRoom();
-            int res = r.getExits().get(direction).move(Game.getPlayer());
-            if(res == 1){
-                System.out.println("La porte est fermé");
-                return;
-            }else if(res == 2){
-                System.out.println("C'est un mur :/");
-                return;
+            try {
+                int res = r.getExits().get(direction).move(Game.getPlayer());
+
+                if (res == 1) {
+                    System.out.println("La porte est fermée");
+                    return;
+                } else if (res == 2) {
+                    System.out.println("C'est un mur :/");
+                    return;
+                }
+                System.out.println("Vous êtes maintenant dans la salle numéro " + Game.getPlayer().getCurrentRoom().getNumber());
+                System.out.println("Vous êtes donc dans : " + Game.getPlayer().getCurrentRoom().getDescription());
+            } catch (Exception e) {
+                System.out.println("C'est un mur !");
             }
-            System.out.println("Vous êtes maintenant dans la salle " + Game.getPlayer().getCurrentRoom().getNumber());
-            System.out.println(Game.getPlayer().getCurrentRoom().getDescription());
 
         } catch (IllegalArgumentException ignored) {
             showUsages();
@@ -54,10 +57,8 @@ public class MoveCommand extends GameCommand {
     @Override
     public List<String> getUsage() {
         return Arrays.asList(
-                "move "
+                "Utilisation de move: move + numéro de salle"
         );
-        //Todo
-        //comment utiliser la command !!
     }
 
 }

@@ -56,13 +56,17 @@ public class SpecialRoom extends Room{
     public void pickUp(Entity player) {
         Item item;
         if (isFragment()) {
+            System.out.println("Vous récupérez un fragment de clé !");
             player.addFragment();
             setFragment(false);
         }
         if (getItemContained().isEmpty()) {
+            System.out.println("Il n' y a rien à ramasser ici !");
             return;
         }
+        System.out.println("Vous ramassez tous les objets de la salle :");
         for (int i = getItemContained().size(); i >= 0; --i) {
+            System.out.println(getItemContained().get(i).getDescription());
             item = getItemContained().get(i);
             player.getBag().add(item); // Adds each item to the bag of the player
             getItemContained().remove(i);  // Removes it from the room
@@ -73,6 +77,7 @@ public class SpecialRoom extends Room{
 
     @Override
     public void onEnter(Entity player){
+        super.printExits();
         if(trap != null) {
             trap.trap(player);
             trap = null;
@@ -80,6 +85,7 @@ public class SpecialRoom extends Room{
 
         if (!(player.getCurrentRoom().equals(this)))//checks if the player got out of the room because of trap
                 return;
+
 
         for (Item item : itemNeeded){
             if (!(player.getBag().contains(item))){

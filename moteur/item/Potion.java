@@ -1,6 +1,7 @@
 package moteur.item;
 
-import vue.command.game.Entity;
+
+import moteur.entity.Entity;
 
 /**
  * Created by user on 20/01/2015.

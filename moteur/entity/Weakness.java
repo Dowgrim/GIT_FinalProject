@@ -8,7 +8,7 @@ import java.util.HashMap;
 public class Weakness extends Effect {
     private static final String KEY = "Affaiblissement";
 
-    public Weakness(int power, String key) {
+    public Weakness(int power) {
         super(power);
     }
 

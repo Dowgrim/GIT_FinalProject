@@ -38,7 +38,7 @@ public class Game {
 
     public Game() {
         player = new Entity();
-        firstRooms.set(0, floor());
+        firstRooms.add(floor());
         player.setCurrentRoom(firstRooms.get(0));
         isInitialized = true;
         start();
@@ -218,6 +218,10 @@ public class Game {
 
     public static void removeCommand(Command command){
         cmd.unregister(command);
+    }
+
+    public static void main(String[] args) {
+        new Game();
     }
 
     /*public void createRandomGame(int nbFloor, ArrayList<Integer> Xs, ArrayList<Integer> Ys, Entity player){

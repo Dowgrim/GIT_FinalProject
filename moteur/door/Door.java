@@ -20,6 +20,7 @@ public class Door {
     public Door(int seed, int state, ArrayList<Room> rooms) {
         this.seed = seed;
         this.state = state;
+        this.rooms = rooms;
     }
 
     public int move(Entity player){

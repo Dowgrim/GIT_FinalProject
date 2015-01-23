@@ -23,6 +23,12 @@ public class Entity extends Living {
         this.fragments = 0; // The player begins with no fragment
     }
 
+    public Entity (Room room) {
+        this.energy = 100; // The player begins with 100 energy points
+        this.fragments = 0; // The player begins with no fragment
+        currentRoom = room;
+    }
+
     /**
      * The effects currently applied to the player
      * @return HashMap
@@ -45,7 +51,7 @@ public class Entity extends Living {
     @Override
     public void setCurrentRoom(Room room){
         currentRoom.onLeave(this);
-        super.setCurrentRoom(currentRoom);
+        super.setCurrentRoom(room);
         currentRoom.onEnter(this);
     }
 

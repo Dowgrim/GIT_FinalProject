@@ -37,9 +37,10 @@ public class Game {
     private final static CommandManager cmd = new CommandManager();
 
     public Game() {
-        player = new Entity();
         firstRooms.add(floor());
+        player = new Entity(firstRooms.get(0));
         player.setCurrentRoom(firstRooms.get(0));
+        registerCommands();
         isInitialized = true;
         start();
     }
@@ -63,7 +64,6 @@ public class Game {
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
             for (String command = reader.readLine(); !"stop".equalsIgnoreCase(command); command = reader.readLine()) {
                 cmd.dispatch(command);
-
                 player.nextTurn();
                 for(Teleporter tel : teleporters){
                     tel.generateExit();

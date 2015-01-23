@@ -73,9 +73,8 @@ public class Game {
             System.out.println("Error");
             e.printStackTrace();
         }
-
-
     }
+
 
     public static CommandManager getCommandManager() {
         return cmd;

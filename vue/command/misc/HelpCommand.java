@@ -1,9 +1,8 @@
 package vue.command.misc;
 
-import fr.asura.zuul.game.zuul.Zuul;
-import fr.asura.zuul.command.Command;
-import fr.asura.zuul.command.CommandArguments;
-import fr.asura.zuul.i18n.I18n;
+import moteur.Game;
+import vue.command.Command;
+import vue.command.CommandArguments;
 
 import java.util.List;
 
@@ -13,7 +12,7 @@ public class HelpCommand extends Command {
      * HelpCommand constructor
      */
     public HelpCommand() {
-        super("help", I18n.get("help.description"));
+        super("help", "Print all Command");
     }
 
     /**
@@ -23,8 +22,7 @@ public class HelpCommand extends Command {
      */
     @Override
     public void onCommand(CommandArguments arguments) {
-
-        List<Command> commands = Zuul.getCommandManager().getCommands();
+        List<Command> commands = Game.getCommandManager().getCommands();
 
         StringBuilder builder = new StringBuilder(256);
         for (Command command : commands) {

@@ -1,11 +1,14 @@
 package moteur.room;
 
+import moteur.Game;
 import moteur.craft.Crafter;
 import moteur.entity.*;
 import moteur.item.Item;
 import moteur.item.Key;
 import moteur.trap.Trap;
 import moteur.door.*;
+import vue.command.game.CraftCommand;
+import vue.command.game.CrafterCommand;
 
 import java.util.ArrayList;
 
@@ -20,9 +23,9 @@ public class SpecialRoom extends Room{
     private Trap trap;
     private Crafter crafter;
 
-    public SpecialRoom(ArrayList<Door> exits, int number, int x, int y, String description,
-                       boolean fragment, ArrayList<Item> itemNeeded, ArrayList<Item> itemContained, Crafter crafter, Trap trap) {
-        super(exits, number, x, y, description);
+    public SpecialRoom(int number, int x, int y, String description, boolean fragment, ArrayList<Item> itemNeeded,
+                       ArrayList<Item> itemContained, Crafter crafter, Trap trap) {
+        super(number, x, y, description);
         this.fragment = fragment;
         this.itemNeeded = itemNeeded;
         this.itemContained = itemContained;
@@ -67,27 +70,34 @@ public class SpecialRoom extends Room{
 
     }
 
+
     @Override
-    public boolean tryUnlock(ArrayList<Item> bag){
+    public void onEnter(Entity player){
+        if(trap != null) {
+            trap.trap(player);
+            trap = null;
+        }
+
+        if (!(player.getCurrentRoom().equals(this)))//checks if the player got out of the room because of trap
+                return;
+
         for (Item item : itemNeeded){
-            if (!(bag.contains(item))){
-                return false;
+            if (!(player.getBag().contains(item))){
+                return;
             }
         }
-        return true;
+        this.pickUp(player); // picks up all the items of the room
+        if(crafter != null){
+            Game.addCommand(new CraftCommand());
+            Game.addCommand(new CrafterCommand());
+        }
     }
 
     @Override
-    public void enter(Entity player){
-        super.enter(player);
-        tryUnlock(player.getBag());
-        if (true) {
-            trap.trap(player);
-            if (!(player.getCurrentRoom().equals(this))) { //checks if the player got out of the room because of trap
-                return;
-            }
-            this.pickUp(player); // picks up all the items of the room
-            crafter.craft(player); // Crafts if possible
-         }
+    public void onLeave(Entity player){
+        if(crafter != null){
+            Game.removeCommand(new CraftCommand());
+            Game.removeCommand(new CrafterCommand());
+        }
     }
  }

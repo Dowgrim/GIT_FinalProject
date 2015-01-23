@@ -16,10 +16,9 @@ public class Teleporter extends SpecialRoom{
 
     private Room teleporExit;
 
-    public Teleporter(ArrayList<Door> exits, int number, int x, int y, String description, boolean locked,
-                      boolean fragment, ArrayList<Item> itemNeeded, ArrayList<Item> itemContained, Crafter crafter, Trap trap, Room telepor) {
-        super(exits, number, x, y, description, locked, fragment, itemNeeded, itemContained, crafter, trap);
-        this.teleporExit = telepor;
+    public Teleporter(ArrayList<Room> potentialsExits, int number, int x, int y, String description) {
+        super(number, x, y, description);
+        this.potentialsExits = potentialsExits;
     }
 
     public ArrayList<Room> getPotentialsExits() {

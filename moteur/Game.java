@@ -2,11 +2,15 @@ package moteur;
 
 import moteur.door.Door;
 import moteur.entity.Entity;
-import moteur.room.Checkpoint;
-import moteur.room.Corridor;
-import moteur.room.Room;
-import moteur.room.SpecialRoom;
+import moteur.room.*;
+import vue.command.Command;
+import vue.command.CommandManager;
+import vue.command.game.CraftCommand;
+import vue.command.game.MoveCommand;
+import vue.command.misc.HelpCommand;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -18,146 +22,66 @@ public class Game {
 
     private Random rand = new Random();
 
-    private Entity player;
+    private static Entity player;
 
     //List of first Room of all floor
-    private ArrayList<Room> firstRooms = new ArrayList<Room>();
+    private static ArrayList<Room> firstRooms = new ArrayList<Room>();
+
+    //Teleporter
+    private static ArrayList<Teleporter> teleporters = new ArrayList<Teleporter>();
 
     //If the game have been initialized
-    private boolean isInitialized = false;
+    private static boolean isInitialized = false;
 
-
+    // Command manager
+    private final static CommandManager cmd = new CommandManager();
 
     public Game() {
         player = new Entity();
         firstRooms.set(0, floor());
+        player.setCurrentRoom(firstRooms.get(0));
+        isInitialized = true;
         start();
     }
 
-    /*public void createRandomGame(int nbFloor, ArrayList<Integer> Xs, ArrayList<Integer> Ys, Entity player){
-        ArrayList<ArrayList<Room>> allRooms = new ArrayList<ArrayList<Room>>();
-
-        for(int i = 0; i < nbFloor; i++) {
-            allRooms.add(createRandomFloor(Xs.get(i), Ys.get(i)));
-        }
-    }*/
-
-
-   /* public ArrayList<Room> createRandomFloor(int nb, int x, int y, Entity player, int posX, int posY){
-
-        //rooms total de l'étage
-        ArrayList<Room> rooms = new ArrayList<Room>();
-
-        ArrayList<Corridor> corridors;
-
-        ArrayList<Door> doors;
-
-        rooms.add(new Checkpoint(nb+'0'+'0', 1, 1, player));
-
-        for(int i = 0; i < ((x*y)/3)+rand.nextInt(x);  i++){
-                //Corridor ou room
-                if(rand.nextInt(10) >= 5){
-                    r = new Corridor();
-
-
-
-
-
-
-
-                }else{
-
-                    ArrayList<Item> FloorItem = new ArrayList<Item>();
-                    boolean keyFrag = false;
-                    ArrayList<Item> ItemNeeded = new ArrayList<Item>();
-                    boolean lock = false;
-                    Crafter craft;
-                    Trap trap;
-
-                    //Salle Piégé
-                    if(rand.nextInt(10) >= 6){
-                        trap = createRandomTrap();
-                    }
-
-                    for(int j = rand.nextInt(3); j > 0; j--){
-                        if(rand.nextInt(10) >= 5) {
-                            FloorItem.add(createRandomItem(rand.nextInt(DATA.getItems().size())));
-                        }
-                    }
-
-                    if(!frag && rand.nextInt(20) == 0){
-                        keyFrag = true;
-                        frag = true;
-                    }
-
-                    for(int j = rand.nextInt(3); j > 0; j--){
-                        if(rand.nextInt(10) >= 5){
-                            ItemNeeded.add(createRandomItemNeeded(rand.nextInt(Data.getItemsNeeded().size())));
-                        }
-                    }
-
-                    if(rand.nextInt(10) >= 5){
-                        lock = true;
-                    }
-
-                    if(rand.nextInt(20) == 0){
-                        craft = createRandomCraft();
-                    }
-                }
-
-        }
-
-
-    return null;
-   }
-
-
-    public ArrayList<Room> generateCorridors(Random rand){
-        ArrayList<Room> rooms = new ArrayList<Room>();
-        if(rand.nextInt(10) >= 5){
-            rooms.add(new Corridor());
+    public static Entity getPlayer() {
+        return player;
     }
 
 
-    public Crafter createRandomCraft(){
-
-
-    }
-
-    public Item createRandomItemNeeded(){
-
-    }
-
-
-    public Item createRandomItem(){
-
-    }
-
-    public Trap createRandomTrap(){
-
-    }*/
-
-    public void start() {
+    private void start() {
         //registerCommands();
 
-        System.out.println("Welcome !!");
-
-        /*try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
-            for (String command = reader.readLine(); !"stop".equalsIgnoreCase(command); command = reader.readLine()) {
-                cmd.dispatch(command);
-            }
-        } catch (Exception e) {
-            System.out.println(I18n.get("error.is"));
-            e.printStackTrace();
-        }*/
+        System.out.println();
+        System.out.println("Bienvenue dans notre jeu !");
+        System.out.println(("Préparez-vous à affronter de nombreuses épreuves !"));
+        System.out.println("Tapez 'help' si vous ne savez pas quoi faire..");
+        System.out.println();
 
         firstRooms.add(floor());
 
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
+            for (String command = reader.readLine(); !"stop".equalsIgnoreCase(command); command = reader.readLine()) {
+                cmd.dispatch(command);
+
+                player.nextTurn();
+                for(Teleporter tel : teleporters){
+                    tel.generateExit();
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Error");
+            e.printStackTrace();
+        }
 
 
     }
 
-    public Checkpoint floor(){
+    public static CommandManager getCommandManager() {
+        return cmd;
+    }
+
+    private Checkpoint floor(){
 
         ArrayList<Room> rooms = new ArrayList<Room>();
 
@@ -273,31 +197,133 @@ public class Game {
         return cp;
     }
 
-    public boolean isInitialized() {
+    public static boolean isInitialized() {
         return isInitialized;
     }
 
     /**
      * Register all commands.
      */
-    /*public static void registerCommands() {
+    private static void registerCommands() {
         // Misc commands
         cmd.register(new HelpCommand());
-        cmd.register(new VersionCommand());
-
-        // Manage commands
-        cmd.register(new LanguageCommand());
 
         // Game commands
-        cmd.register(new StartCommand());
-        cmd.register(new BuildingCommand());
-        cmd.register(new PlayerCommand());
         cmd.register(new MoveCommand());
-        cmd.register(new ItemCommand());
-        cmd.register(new FunCommand());
-        cmd.register(new WorkCommand());
-    }*/
-    public static void main(String[] args) {
-        Game game = new Game();
     }
+
+    public static void addCommand(Command command) {
+        cmd.register(command);
+    }
+
+    public static void removeCommand(Command command){
+        cmd.unregister(command);
+    }
+
+    /*public void createRandomGame(int nbFloor, ArrayList<Integer> Xs, ArrayList<Integer> Ys, Entity player){
+        ArrayList<ArrayList<Room>> allRooms = new ArrayList<ArrayList<Room>>();
+
+        for(int i = 0; i < nbFloor; i++) {
+            allRooms.add(createRandomFloor(Xs.get(i), Ys.get(i)));
+        }
+    }*/
+
+
+   /* public ArrayList<Room> createRandomFloor(int nb, int x, int y, Entity player, int posX, int posY){
+
+        //rooms total de l'étage
+        ArrayList<Room> rooms = new ArrayList<Room>();
+
+        ArrayList<Corridor> corridors;
+
+        ArrayList<Door> doors;
+
+        rooms.add(new Checkpoint(nb+'0'+'0', 1, 1, player));
+
+        for(int i = 0; i < ((x*y)/3)+rand.nextInt(x);  i++){
+                //Corridor ou room
+                if(rand.nextInt(10) >= 5){
+                    r = new Corridor();
+
+
+
+
+
+
+
+                }else{
+
+                    ArrayList<Item> FloorItem = new ArrayList<Item>();
+                    boolean keyFrag = false;
+                    ArrayList<Item> ItemNeeded = new ArrayList<Item>();
+                    boolean lock = false;
+                    Crafter craft;
+                    Trap trap;
+
+                    //Salle Piégé
+                    if(rand.nextInt(10) >= 6){
+                        trap = createRandomTrap();
+                    }
+
+                    for(int j = rand.nextInt(3); j > 0; j--){
+                        if(rand.nextInt(10) >= 5) {
+                            FloorItem.add(createRandomItem(rand.nextInt(DATA.getItems().size())));
+                        }
+                    }
+
+                    if(!frag && rand.nextInt(20) == 0){
+                        keyFrag = true;
+                        frag = true;
+                    }
+
+                    for(int j = rand.nextInt(3); j > 0; j--){
+                        if(rand.nextInt(10) >= 5){
+                            ItemNeeded.add(createRandomItemNeeded(rand.nextInt(Data.getItemsNeeded().size())));
+                        }
+                    }
+
+                    if(rand.nextInt(10) >= 5){
+                        lock = true;
+                    }
+
+                    if(rand.nextInt(20) == 0){
+                        craft = createRandomCraft();
+                    }
+                }
+
+        }
+
+
+    return null;
+   }
+
+
+    public ArrayList<Room> generateCorridors(Random rand){
+        ArrayList<Room> rooms = new ArrayList<Room>();
+        if(rand.nextInt(10) >= 5){
+            rooms.add(new Corridor());
+    }
+
+
+    public Crafter createRandomCraft(){
+
+
+    }
+
+    public Item createRandomItemNeeded(){
+
+    }
+
+
+    public Item createRandomItem(){
+
+    }
+
+    public Trap createRandomTrap(){
+
+    }*/
+
+
+
+
 }

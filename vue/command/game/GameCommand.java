@@ -2,7 +2,7 @@ package vue.command.game;
 
 import vue.command.Command;
 import vue.command.CommandArguments;
-import vue.Game;
+import moteur.Game;
 
 public class GameCommand extends Command {
 
@@ -21,7 +21,7 @@ public class GameCommand extends Command {
      */
     public boolean isInitialized() {
         if (!Game.isInitialized()) {
-            System.out.println(I18n.get("game.not.start"));
+            System.out.println("Le jeu n'est pas encore lancé");
             return false;
         }
         return true;

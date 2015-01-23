@@ -37,7 +37,7 @@ public final class CommandManager {
      * @return list of all registered commands
      */
     public List<Command> getCommands() {
-        return new ArrayList<>(commands.values());
+        return new ArrayList<Command>(commands.values());
     }
 
     /**
@@ -46,7 +46,6 @@ public final class CommandManager {
      * @param command command to register
      */
     public void register(Command command) {
-        checkNotNull(command, "A command can't be null");
         commands.put(command.getName(), command);
     }
 
@@ -56,7 +55,6 @@ public final class CommandManager {
      * @param command command to remove
      */
     public void unregister(Command command) {
-        checkNotNull(command, "A command can't be null");
         commands.remove(command.getName());
     }
 

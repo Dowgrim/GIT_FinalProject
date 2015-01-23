@@ -22,23 +22,11 @@ public class Door {
         this.state = state;
     }
 
-    public void move(Entity player){
-        if(!rooms.contains(player.getCurrentRoom())) {
-            /*
-                Affichage erreur
-                Appel de la méthode d'affichage ;)
-            */
-            return;
-        }
+    public int move(Entity player){
         if(state == 0){
-                player.setCurrentRoom(getOtherExit(player.getCurrentRoom()));
+            player.setCurrentRoom(getOtherExit(player.getCurrentRoom()));
         }
-        if(state >= 1){
-            /*
-                Affichage erreur
-                Appel de la méthode d'affichage ;)
-            */
-        }
+        return state;
     }
 
 

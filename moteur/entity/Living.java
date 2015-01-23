@@ -14,4 +14,8 @@ public class Living {
     public void setCurrentRoom(Room currentRoom) {
         this.currentRoom = currentRoom;
     }
+
+    public void nextTurn() {
+
+    }
 }

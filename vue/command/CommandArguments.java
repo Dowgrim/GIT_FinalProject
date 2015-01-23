@@ -1,13 +1,12 @@
 package vue.command;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class CommandArguments {
 
-    // Space splitter
-    private final static String SPACE = Splitter.on(" ").trimResults().omitEmptyStrings();
     // List of String arguments
     private List<String> arguments;
     // Flag
@@ -19,7 +18,7 @@ public class CommandArguments {
      * @param arguments List arguments
      */
     public CommandArguments(List<String> arguments) {
-        this.arguments = new ArrayList<>(arguments);
+        this.arguments = new ArrayList<String>(arguments);
     }
 
     /**
@@ -37,7 +36,7 @@ public class CommandArguments {
      * @param arguments String arguments
      */
     public CommandArguments(String arguments) {
-        this(SPACE.splitToList(Strings.nullToEmpty(arguments).trim()));
+        this.arguments = Arrays.asList(arguments.split(" "));
     }
 
     /**

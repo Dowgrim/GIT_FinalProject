@@ -38,6 +38,17 @@ public class Entity extends Living {
         }
     }
 
+    /**
+     *
+     * @param room
+     */
+    @Override
+    public void setCurrentRoom(Room room){
+        currentRoom.onLeave(this);
+        super.setCurrentRoom(currentRoom);
+        currentRoom.onEnter(this);
+    }
+
     public void removeEffect(Effect effect) {
         effects.remove(effect);
     }
@@ -94,4 +105,11 @@ public class Entity extends Living {
             System.out.println();
         }
     }
+
+    @Override
+    public void nextTurn() {
+        for(Object ef : effects.values()){
+            ((Effect)ef).apply(this);
+        }
     }
+}

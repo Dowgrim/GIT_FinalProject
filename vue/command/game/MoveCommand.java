@@ -1,5 +1,7 @@
 package vue.command.game;
 
+import moteur.Game;
+import moteur.room.Room;
 import vue.command.CommandArguments;
 
 import java.util.Arrays;
@@ -11,7 +13,7 @@ public class MoveCommand extends GameCommand {
      * MoveCommand constructor
      */
     public MoveCommand() {
-        super("move", I18n.get("move.description"));
+        super("move", "Move your player");
     }
 
     /**
@@ -24,37 +26,38 @@ public class MoveCommand extends GameCommand {
         if (!isInitialized())
             return;
 
-        if (Zuul.getPlayer().isMobile()) {
-            if (arguments.size() != 1) {
+        if (arguments.size() != 1) {
                 showUsages();
                 return;
-            }
+        }
 
-            String direction = arguments.getArgument(0);
+        int direction = Integer.parseInt(arguments.getArgument(0));
 
-            try {
-                Cardinal cardinal = Cardinal.valueOf(direction.toUpperCase());
-                Room neighbour = Zuul.getPlayer().getLocation().getNeighbour(cardinal);
-                System.out.println(Zuul.getPlayer().getLocation().getName());
-                if (neighbour != null) {
-                    System.out.println(I18n.get("move.done", direction));
-                    neighbour.onEnter(Zuul.getHour(), Zuul.getPlayer());
-                } else {
-                    System.out.println(I18n.get("move.impossible", direction));
-                }
-            } catch (IllegalArgumentException ignored) {
-                showUsages();
+        try {
+            Room r = Game.getPlayer().getCurrentRoom();
+            int res = r.getExits().get(direction).move(Game.getPlayer());
+            if(res == 1){
+                System.out.println("La porte est fermé");
+                return;
+            }else if(res == 2){
+                System.out.println("C'est un mur :/");
+                return;
             }
-        } else {
-            System.out.println(I18n.get("move.stuck", Zuul.getPlayer().getLocation().getName()));
+            System.out.println("Vous êtes maintenant dans la salle " + Game.getPlayer().getCurrentRoom().getNumber());
+            System.out.println(Game.getPlayer().getCurrentRoom().getDescription());
+
+        } catch (IllegalArgumentException ignored) {
+            showUsages();
         }
     }
 
     @Override
     public List<String> getUsage() {
         return Arrays.asList(
-                "move " + Cardinal.NORTH + " | move the player to the " + Cardinal.NORTH
+                "move "
         );
+        //Todo
+        //comment utiliser la command !!
     }
 
 }
